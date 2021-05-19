@@ -1,5 +1,4 @@
 import { useState } from "react";
-import data from "./mocks/data.json";
 import styled from "styled-components";
 
 import {
@@ -15,12 +14,13 @@ const Root = styled.div`
   width: 320px;
 `;
 
-export const AutoComplete = ({ iconColor, style }) => {
-  const [search, setSearch] = useState({
+export const AutoComplete = ({ iconColor, data, style, placeholder, onSearch = () => {}, onSelect = () => {} }) => {
+  const [ search, setSearch ] = useState({
     text: "",
     suggestions: []
   });
-  const [isComponentVisible, setIsComponentVisible] = useState(true);
+
+  const [ isDropdownVisible, setIsDropdownVisible ] = useState(true);
 
   const onTextChanged = (e) => {
     const value = e.target.value;
@@ -29,17 +29,18 @@ export const AutoComplete = ({ iconColor, style }) => {
       const regex = new RegExp(`^${value}`, "i");
       suggestions = data.sort().filter(v => regex.test(v.name));
     }
-    setIsComponentVisible(true);
+    setIsDropdownVisible(true);
     setSearch({ suggestions, text: value });
+    onSearch(value);
   };
 
   const suggestionSelected = (value) => {
-    setIsComponentVisible(false);
-
+    setIsDropdownVisible(false);
     setSearch({
       text: value.name,
       suggestions: []
     });
+    onSelect(value);
   };
 
   const { suggestions } = search;
@@ -47,9 +48,9 @@ export const AutoComplete = ({ iconColor, style }) => {
   return (
     <Root style={style}>
       <div
-        onClick={() => setIsComponentVisible(false)}
+        onClick={() => setIsDropdownVisible(false)}
         style={{
-          display: isComponentVisible ? "block" : "none",
+          display: isDropdownVisible ? "block" : "none",
           width: "200vw",
           height: "200vh",
           backgroundColor: "transparent",
@@ -61,17 +62,18 @@ export const AutoComplete = ({ iconColor, style }) => {
       />
       <div>
         <Input
-          id="input"
-          autoComplete="off"
-          value={search.text}
-          onChange={onTextChanged}
-          type={"text"}
+          id = "input"
+          autoComplete = "off"
+          value = {search.text}
+          onChange = {onTextChanged}
+          type = "text"
+          placeholder = {placeholder}
         />
-        <AutoCompleteIcon color={iconColor} isOpen={isComponentVisible}>
+        <AutoCompleteIcon color={iconColor} isOpen={isDropdownVisible}>
           {/* TODO: add remove icon /> */}
         </AutoCompleteIcon>
       </div>
-      {suggestions.length > 0 && isComponentVisible && (
+      {suggestions.length > 0 && isDropdownVisible && (
         <AutoCompleteContainer>
           {suggestions.map(item => (
             <AutoCompleteItem key={item.code}>
