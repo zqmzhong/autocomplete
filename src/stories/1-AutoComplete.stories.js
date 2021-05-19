@@ -1,6 +1,6 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { AutoComplete } from "../autocomplete";
+import AutoComplete from "../index";
 import data from "../mocks/data.json";
 
 export default {

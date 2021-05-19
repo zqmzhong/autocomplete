@@ -3,10 +3,9 @@
 ## TODO
 
 - [x] 初始化
-- [ ] 添加 X icon
+- [x] 使用 storybook 展示 demo
 - [ ] 调整 API
-- [ ] 移除组件中的 mock 数据
-- [ ] demo 优化
+- [ ] 添加 X icon
 - [ ] 添加单元测试
 - [ ] 配置 `lint` 与 `format`
 - [ ] CI/CD
