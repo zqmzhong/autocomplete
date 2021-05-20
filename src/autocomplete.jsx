@@ -21,12 +21,14 @@ AutoComplete.propTypes = {
 };
 
 AutoComplete.defaultProps = {
+    style: {},
+    placeholder: '',
     allowClear: false,
-    onSearch() {},
-    onSelect() {},
+    onSearch: () => {},
+    onSelect: () => {},
 };
 
-const AutoComplete = ({ data, style, placeholder, allowClear, onSearch, onSelect }) => {
+function AutoComplete({ data, style, placeholder, allowClear, onSearch, onSelect }) {
     const [search, setSearch] = useState({
         text: '',
         suggestions: [],
@@ -102,6 +104,6 @@ const AutoComplete = ({ data, style, placeholder, allowClear, onSearch, onSelect
             )}
         </Root>
     );
-};
+}
 
 export default AutoComplete;
