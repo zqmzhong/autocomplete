@@ -23,6 +23,7 @@ export const ValueWrapper = styled.input`
 `;
 
 export const AutoCompleteIcon = styled.span`
+  display: ${(props) => (props.allowClear ? "flex" : "none")};
   position: absolute;
   top: 0;
   right: 0;
@@ -31,7 +32,6 @@ export const AutoCompleteIcon = styled.span`
   transition: all 150ms linear;
   transform: ${(props) => (props.isOpen ? "rotate(0.5turn)" : "none")};
   transform-origin: center;
-  display: flex;
 
   svg {
     margin: auto;

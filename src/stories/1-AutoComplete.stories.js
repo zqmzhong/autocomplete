@@ -18,3 +18,15 @@ export const Basic = () => (
     onSelect = {action("onSelect")}
   />
 );
+
+export const WithClearIcon = () => (
+  <AutoComplete
+    placeholder = "input here"
+    style = {{}}
+    data = {data}
+    iconColor = ""
+    allowClear = {true}
+    onSearch = {action("onSearch")}
+    onSelect = {action("onSelect")}
+  />
+);

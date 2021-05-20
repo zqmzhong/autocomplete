@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { BsX } from "react-icons/bs";
 import styled from "styled-components";
 
 import {
@@ -14,7 +15,15 @@ const Root = styled.div`
   width: 320px;
 `;
 
-export const AutoComplete = ({ iconColor, data, style, placeholder, onSearch = () => {}, onSelect = () => {} }) => {
+export const AutoComplete = ({
+  iconColor,
+  data,
+  style,
+  placeholder,
+  allowClear = false,
+  onSearch = () => {},
+  onSelect = () => {} 
+}) => {
   const [ search, setSearch ] = useState({
     text: "",
     suggestions: []
@@ -43,6 +52,10 @@ export const AutoComplete = ({ iconColor, data, style, placeholder, onSearch = (
     onSelect(value);
   };
 
+  const clearText = () => {
+    setSearch({ text: "", suggestions: [] });
+  }
+
   const { suggestions } = search;
 
   return (
@@ -69,8 +82,8 @@ export const AutoComplete = ({ iconColor, data, style, placeholder, onSearch = (
           type = "text"
           placeholder = {placeholder}
         />
-        <AutoCompleteIcon color={iconColor} isOpen={isDropdownVisible}>
-          {/* TODO: add remove icon /> */}
+        <AutoCompleteIcon allowClear={allowClear} color={iconColor} isOpen={isDropdownVisible}>
+          <BsX onClick={clearText} />
         </AutoCompleteIcon>
       </div>
       {suggestions.length > 0 && isDropdownVisible && (
