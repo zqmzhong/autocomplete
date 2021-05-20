@@ -13,7 +13,6 @@ export const Basic = () => (
     placeholder = "input here"
     style = {{}}
     data = {data}
-    iconColor = ""
     onSearch = {action("onSearch")}
     onSelect = {action("onSelect")}
   />
@@ -24,7 +23,6 @@ export const WithClearIcon = () => (
     placeholder = "input here"
     style = {{}}
     data = {data}
-    iconColor = ""
     allowClear = {true}
     onSearch = {action("onSearch")}
     onSelect = {action("onSelect")}

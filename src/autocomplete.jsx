@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { BsX } from "react-icons/bs";
-import styled from "styled-components";
 
 import {
+  Root,
   AutoCompleteContainer,
   AutoCompleteIcon,
   Input,
@@ -10,13 +10,8 @@ import {
   AutoCompleteItemButton
 } from "./styles";
 
-const Root = styled.div`
-  position: relative;
-  width: 320px;
-`;
 
 export const AutoComplete = ({
-  iconColor,
   data,
   style,
   placeholder,
@@ -33,13 +28,13 @@ export const AutoComplete = ({
 
   const onTextChanged = (e) => {
     const value = e.target.value;
-    let suggestions = [];
+    let displayData = [];
     if (value.length > 0) {
       const regex = new RegExp(`^${value}`, "i");
-      suggestions = data.sort().filter(v => regex.test(v.name));
+      displayData = data.sort().filter(v => regex.test(v.name));
     }
     setIsDropdownVisible(true);
-    setSearch({ suggestions, text: value });
+    setSearch({ displayData, text: value });
     onSearch(value);
   };
 
@@ -82,7 +77,7 @@ export const AutoComplete = ({
           type = "text"
           placeholder = {placeholder}
         />
-        <AutoCompleteIcon allowClear={allowClear} color={iconColor} isOpen={isDropdownVisible}>
+        <AutoCompleteIcon allowClear={allowClear} isOpen={isDropdownVisible}>
           <BsX onClick={clearText} />
         </AutoCompleteIcon>
       </div>
