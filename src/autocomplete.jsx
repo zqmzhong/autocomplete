@@ -44,7 +44,10 @@ function AutoComplete({ data, style, placeholder, allowClear, onSearch, onSelect
             displayData = data.sort().filter((v) => regex.test(v.name));
         }
         setIsDropdownVisible(true);
-        setSearch({ displayData, text: value });
+        setSearch({
+            suggestions: displayData,
+            text: value,
+        });
         onSearch(value);
     };
 
