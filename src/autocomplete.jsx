@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { BsX } from 'react-icons/bs';
+import { useEventCallback } from 'rxjs-hooks';
+import { map, debounceTime, pluck } from 'rxjs/operators';
 
 import {
     Root,
@@ -36,20 +38,30 @@ function AutoComplete({ data, style, placeholder, allowClear, onSearch, onSelect
 
     const [isDropdownVisible, setIsDropdownVisible] = useState(true);
 
-    const onTextChanged = (e) => {
-        const value = e.target.value;
-        let displayData = [];
-        if (value.length > 0) {
-            const regex = new RegExp(`^${value}`, 'i');
-            displayData = data.sort().filter((v) => regex.test(v.name));
-        }
-        setIsDropdownVisible(true);
-        setSearch({
-            suggestions: displayData,
-            text: value,
-        });
-        onSearch(value);
-    };
+    const [onTextChanged] = useEventCallback((event$) =>
+        event$.pipe(
+            pluck('target', 'value'),
+            map((value) => {
+                let displayData = [];
+                if (value.length > 0) {
+                    const regex = new RegExp(`^${value}`, 'i');
+                    displayData = data.sort().filter((v) => regex.test(v.name));
+                }
+                setIsDropdownVisible(true);
+                setSearch({
+                    suggestions: displayData,
+                    text: value,
+                });
+                return value;
+            }),
+            // 用户停止输入 500ms 后，再发送请求
+            debounceTime(500),
+            map((value) => {
+                console.log(value);
+                onSearch(value);
+            })
+        )
+    );
 
     const suggestionSelected = (value) => {
         setIsDropdownVisible(false);
