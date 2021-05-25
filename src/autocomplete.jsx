@@ -95,7 +95,7 @@ function AutoComplete({ data, style, placeholder, allowClear, onSearch, onSelect
             />
             <div>
                 <Input
-                    id="input"
+                    id="autocomplete-input"
                     autoComplete="off"
                     value={search.text}
                     onChange={onTextChanged}
